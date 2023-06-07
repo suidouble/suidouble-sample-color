@@ -5,7 +5,7 @@
 
         <q-btn type="button" ripple color="primary" :loading="isLoading" @click="onClickPickColor">Change Color</q-btn>
 
-        <SignInWithSui defaultChain="sui:devnet" @suiMaster="onSuiMaster" ref="sui" :visible="false" />
+        <SignInWithSui defaultChain="sui:mainnet" @suiMaster="onSuiMaster" ref="sui" :visible="false" />
 
         <q-dialog v-model="showColorDialog">
             <q-card>

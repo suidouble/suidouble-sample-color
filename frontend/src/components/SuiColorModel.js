@@ -17,6 +17,8 @@ class SuiColorModel extends EventTarget {
         this.packagesOnChains = {
             'sui:localnet': '0xb151b521dc50e4859b60f7f8e750a82592c995c5286514e29c0604c7c405a78f',
             'sui:devnet': '0x44ff454f5c49adfcc045fefaa6c93c21e36adc0b7cdb948836657a4078d872d5',
+            'sui:testnet': '0x363a697a7977df8c3cf6272c47ea5df4e94749f92bc703861945b3290c5c0455',
+            'sui:mainnet': '0x1e5eac6391bdcdf45d32a6f84de1778f98926585d69c871a6c2fa8f24d604e7c',
         };
     }
 

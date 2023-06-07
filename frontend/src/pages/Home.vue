@@ -12,9 +12,9 @@
             <p>Check out on github:</p>
 
             <ul>
-                <li><a href="https://github.com/suidouble/suidouble-sample-app/blob/main/move/chat/sources/chat.move">Sui Move contract source code</a></li>
+                <li><a href="https://github.com/suidouble/suidouble-sample-color/blob/main/move/suidouble_color/sources/suidouble_color.move">Sui Move contract source code</a></li>
                 <li><a href="https://github.com/suidouble/suidouble">suidouble library</a></li>
-                <li><a href="https://github.com/suidouble/suidouble-sample-app">this dapp source code</a></li>
+                <li><a href="https://github.com/suidouble/suidouble-sample-color">this dapp source code</a></li>
             </ul>
         </div>
         <div class="col-12 col-md-8">

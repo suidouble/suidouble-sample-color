@@ -2,7 +2,7 @@ const { SuiMaster } = require('suidouble');
 const path = require('path');
 
 const run = async ()=>{
-    const provider = 'dev';
+    const provider = 'local';
     // const provider = 'dev';
     // const provider = 'main';
 
