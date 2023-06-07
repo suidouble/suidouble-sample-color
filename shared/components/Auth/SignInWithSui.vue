@@ -29,7 +29,7 @@
         </q-card>
     </q-dialog>
 
-    <SuiAsync :defaultChain="defaultChain" @suiMaster="onSuiMaster" @loaded="onLibsLoaded" @connected="onConnected" @disconnected="onDisconnected" v-if="libsRequested" ref="sui"/>
+    <SuiAsync flush :defaultChain="defaultChain" @suiMaster="onSuiMaster" @loaded="onLibsLoaded" @connected="onConnected" @disconnected="onDisconnected" v-if="libsRequested" ref="sui"/>
 
 </template>
 
@@ -104,11 +104,17 @@ export default {
                 }
             }
         },
-        isSuiMasterConnected() {
+        isSuiMasterConnected(requireChainName = null) {
             if (this.suiMaster && this.suiMaster.address) {
+                if (requireChainName && this.suiMaster.connectedChain != requireChainName) {
+                    return false;
+                }
                 return true;
             } else if (this.suiMaster && this.suiMaster.signer && this.suiMaster.signer.connectedAddress) {
                 // backward compatible
+                if (requireChainName && this.suiMaster.signer.connectedChain != requireChainName) {
+                    return false;
+                }
                 return true;
             }
 
@@ -160,15 +166,15 @@ export default {
                 throw new Error('can not get suiMaster');
             }
         },
-        async requestConnectedSuiMaster() {
-            if (this.isSuiMasterConnected()) {
+        async requestConnectedSuiMaster(requireChainName = null) {
+            if (this.isSuiMasterConnected(requireChainName)) {
                 return this.suiMaster;
             }
 
             await this.requestLibs();
             await new Promise((res)=>{ setTimeout(res, 200); }); // let providers check if we are already connected
 
-            if (this.isSuiMasterConnected()) {
+            if (this.isSuiMasterConnected(requireChainName)) {
                 return this.suiMaster;
             }
 
@@ -177,7 +183,7 @@ export default {
                 await this.__connectedSuiMasterPromise;
                 this.isLoading = false;
                 
-                if (this.isSuiMasterConnected()) {
+                if (this.isSuiMasterConnected(requireChainName)) {
                     return this.suiMaster;
                 } else {
                     throw new Error('can not get connection');
@@ -195,7 +201,7 @@ export default {
 
             this.isLoading = false;
 
-            if (this.isSuiMasterConnected()) {
+            if (this.isSuiMasterConnected(requireChainName)) {
                 return this.suiMaster;
             } else {
                 throw new Error('can not get connection');

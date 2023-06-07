@@ -5,7 +5,7 @@
 
         <q-btn type="button" ripple color="primary" :loading="isLoading" @click="onClickPickColor">Change Color</q-btn>
 
-        <SignInWithSui defaultChain="sui:mainnet" @suiMaster="onSuiMaster" ref="sui" :visible="false" />
+        <SignInWithSui :defaultChain="defaultChain" @suiMaster="onSuiMaster" ref="sui" :visible="false" />
 
         <q-dialog v-model="showColorDialog">
             <q-card>
@@ -44,6 +44,10 @@ import ColorHomeNFT from './ColorHomeNFT.vue';
 export default {
 	name: 'ColorHome',
 	props: {
+        defaultChain: {
+            default: 'sui:mainnet',
+            type: String,
+        },
 	},
 	data() {
 		return {
@@ -58,6 +62,8 @@ export default {
 
             isNotSupported: false,
             notSupportedChainName: null,
+
+            // defaultChain: 'sui:mainnet',
 		}
 	},
     emits: [],
@@ -71,7 +77,15 @@ export default {
         ColorHomeNFT,
 	},
 	methods: {
+        async notifyAboutWrongConnectedChain() {
+            this.$q.notify('Wrong chain name. Please switch to '+this.defaultChain+' in wallet settings');
+        },
         async onSuiMaster(suiMaster) {
+            if (suiMaster.connectedChain != this.defaultChain) {
+                this.notifyAboutWrongConnectedChain();
+                return false;
+            }
+
             this.suiMaster = suiMaster;
             this.colorModel = SuiColorModel.bySuiMaster(this.suiMaster);
 
@@ -142,7 +156,14 @@ export default {
             this.showColorDialog = false;
             this.selectedColor = null;
 
-            const suiMaster = await this.$refs.sui.requestConnectedSuiMaster();
+            let suiMaster = null;
+            try {
+                suiMaster = await this.$refs.sui.requestConnectedSuiMaster(this.defaultChain);
+            } catch (e) {
+                this.notifyAboutWrongConnectedChain();
+                return false;
+            }
+
             await suiMaster.initialize();
             this.suiMaster = suiMaster;
             this.colorModel = SuiColorModel.bySuiMaster(this.suiMaster);

@@ -15,6 +15,10 @@ export default {
             default: 'sui:devnet',
             type: String,
         },
+        flush: {
+            default: false,
+            type: Boolean,
+        },
 	},
 	data() {
 		return {
@@ -41,6 +45,10 @@ export default {
         }
 	},
 	mounted: function() {
+        if (this.flush) {
+            SuiInBrowser._singleInstance = null;
+        }
+
         this.suiInBrowser = SuiInBrowser.getSingleton({
             debug: true,
             defaultChain: this.defaultChain,
