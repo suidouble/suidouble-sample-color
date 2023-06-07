@@ -60,7 +60,7 @@ module suidouble_color::suidouble_color {
             // Project URL is usually static
             utf8(b"https://suidouble-color.herokuapp.com/"),
             // Creator field can be any
-            utf8(b"Jeka")
+            utf8(b"Suidouble Color")
         ];
 
         // Claim the `Publisher` for the package!

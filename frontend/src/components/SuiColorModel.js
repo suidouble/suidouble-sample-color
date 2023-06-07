@@ -36,6 +36,35 @@ class SuiColorModel extends EventTarget {
         }
     }
 
+    async subscribe(callbackFunc) {
+        await this.initialize();
+        if (!this.pkg) {
+            return false;
+        }
+        const module = await this.pkg.getModule('suidouble_color');
+        await module.subscribeEvents();
+        module.addEventListener('ColorCreated', (event)=>{
+            const objectLike = {
+                address: event.parsedJson.id,
+                fields: {
+                    r: event.parsedJson.r,
+                    g: event.parsedJson.g,
+                    b: event.parsedJson.b,
+                },
+            };
+            callbackFunc(objectLike);
+        });
+    }
+
+    async unsubscribe() {
+        await this.initialize();
+        if (!this.pkg) {
+            return false;
+        }
+        const module = await this.pkg.getModule('suidouble_color');
+        await module.unsubscribeEvents();
+    }
+
     async setColor(params = {}) {
         const r = params.r;
         const g = params.g;

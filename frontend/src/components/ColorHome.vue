@@ -87,6 +87,9 @@ export default {
             }
 
             this.suiMaster = suiMaster;
+            if (this.colorModel) {
+                this.colorModel.unsubscribe();
+            }
             this.colorModel = SuiColorModel.bySuiMaster(this.suiMaster);
 
             if (!this.__lastConnectedChain || this.__lastConnectedChain !== this.suiMaster.connectedChain) {
@@ -131,6 +134,15 @@ export default {
                         this.$refs.colorWave.setColor(color);
                     }
                 }
+
+                await this.colorModel.subscribe((colorAdded)=>{
+                    if (!this.__colorsAddresses[colorAdded.address]) {
+                        this.colors.unshift(colorAdded);
+                        this.__colorsAddresses[colorAdded.address] = true;
+                        const color = 'rgb('+colorAdded.fields.r+','+colorAdded.fields.g+','+colorAdded.fields.b+')';
+                        this.$refs.colorWave.setColor(color);
+                    }
+                });
             }
             this.isLoading = false;
 
@@ -176,7 +188,10 @@ export default {
                 console.log('setting color to ', color);
                 this.$refs.colorWave.setColor(color);
 
-                this.colors.unshift(added);
+                if (!this.__colorsAddresses[added.address]) {
+                    this.colors.unshift(added);
+                    this.__colorsAddresses[added.address] = true;
+                }
             }
 
             // await suiMaster.initialize();
@@ -188,26 +203,6 @@ export default {
 	mounted: async function() {
         this.isLoading = true;
         this.$refs.sui.requestSuiMaster();
-        // this.colors.push({
-        //     fields: {r: 255, g: 255, b: 0},
-        //     address: '0x43432',
-        // });
-        // this.colors.push({
-        //     fields: {r: 255, g: 255, b: 0},
-        //     address: '0x43432',
-        // });
-        // this.colors.push({
-        //     fields: {r: 255, g: 255, b: 0},
-        //     address: '0x43432',
-        // });
-        // this.colors.push({
-        //     fields: {r: 255, g: 2, b: 0},
-        //     address: '0x43432',
-        // });
-        // this.colors.push({
-        //     fields: {r: 255, g: 255, b: 0},
-        //     address: '0x43432',
-        // });
 	},
 }
 </script>

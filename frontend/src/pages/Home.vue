@@ -7,6 +7,8 @@
 
             <p>This dapp lets user switch logo color and stores the value on the blockchain, providing little NFT as a reward.</p>
 
+            <p>Also it demonstrate suidouble's SUI event subscription. Logo color is updated for all users as soon as you mint Color NFT.</p>
+
             <p>Available on 
                 <a href="#" @click="switchTo('sui:mainnet')" :class="{active_one: (chain == 'sui:mainnet')}">mainnet</a>, 
                 <a href="#" @click="switchTo('sui:devnet')"  :class="{active_one: (chain == 'sui:devnet')}">devnet</a> and 
