@@ -9,6 +9,7 @@ Stack: Sui + suidouble + Vue. Ready to be deployed to Heroku
 Code pieces to take a look at:
 
 - smart contract: [suidouble_color.move](move/suidouble_color/sources/suidouble_color.move)
+- smart contract integration test: [test_the_move_contract.test.js](test/test_the_move_contract.test.js)
 - [async suidouble+sui library component](shared/components/AsyncComponents/SuiAsync.js) 
 - [connect button](shared/components/Auth/SignInWithSui.vue) 
 - [sui blockchain interaction components](frontend/src/components) 
