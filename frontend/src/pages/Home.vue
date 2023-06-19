@@ -56,7 +56,7 @@ export default {
 	methods: {
         async switchTo(chainName) {
             this.chain = null;
-            await new Promise((res)=>setTimeout(res, 50));
+            await new Promise((res)=>setTimeout(res, 500));
             this.chain = chainName;
         }
 	},

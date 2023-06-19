@@ -5,7 +5,7 @@
 
         <q-btn type="button" ripple color="primary" :loading="isLoading" @click="onClickPickColor">Change Color</q-btn>
 
-        <SignInWithSui :defaultChain="defaultChain" @suiMaster="onSuiMaster" ref="sui" :visible="false" />
+        <SignInWithSui :defaultChain="defaultChain" @wrongchain="onWrongChain" @suiMaster="onSuiMaster" ref="sui" :visible="false" />
 
         <q-dialog v-model="showColorDialog">
             <q-card>
@@ -36,7 +36,7 @@
 </style>
 
 <script>
-import SignInWithSui from 'shared/components/Auth/SignInWithSui';
+import { SignInWithSui } from 'vue-sui';
 import ColorWave from '../components/ColorWave.vue';
 import SuiColorModel from './SuiColorModel.js';
 import ColorHomeNFT from './ColorHomeNFT.vue';
@@ -77,10 +77,14 @@ export default {
         ColorHomeNFT,
 	},
 	methods: {
+        onWrongChain(tryingTo) {
+            this.$q.notify('Please switch to '+this.defaultChain+' in wallet settings. Currently it is '+tryingTo);
+        },
         async notifyAboutWrongConnectedChain() {
             this.$q.notify('Wrong chain name. Please switch to '+this.defaultChain+' in wallet settings');
         },
         async onSuiMaster(suiMaster) {
+            console.error('suiMaster.connectedChain', suiMaster);
             if (suiMaster.connectedChain != this.defaultChain) {
                 this.notifyAboutWrongConnectedChain();
                 return false;
