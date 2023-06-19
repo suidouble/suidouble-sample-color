@@ -4,6 +4,8 @@ Very simple chat application to demonstrate [suidouble](https://github.com/suido
 
 - [check it out online](https://suidouble-color.herokuapp.com/).
 
+<img src="https://suidouble.github.io/sui_videos/suidouble_color.gif" height="300">
+
 Stack: Sui + suidouble + Vue. Ready to be deployed to Heroku
 
 Code pieces to take a look at:
