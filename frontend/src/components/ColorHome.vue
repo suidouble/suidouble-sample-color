@@ -144,7 +144,10 @@ export default {
                         this.colors.unshift(colorAdded);
                         this.__colorsAddresses[colorAdded.address] = true;
                         const color = 'rgb('+colorAdded.fields.r+','+colorAdded.fields.g+','+colorAdded.fields.b+')';
-                        this.$refs.colorWave.setColor(color);
+
+                        if (this.$refs.colorWave) {
+                            this.$refs.colorWave.setColor(color);
+                        }
                     }
                 });
             }
