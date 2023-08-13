@@ -139,17 +139,23 @@ export default {
                     }
                 }
 
-                await this.colorModel.subscribe((colorAdded)=>{
-                    if (!this.__colorsAddresses[colorAdded.address]) {
-                        this.colors.unshift(colorAdded);
-                        this.__colorsAddresses[colorAdded.address] = true;
-                        const color = 'rgb('+colorAdded.fields.r+','+colorAdded.fields.g+','+colorAdded.fields.b+')';
+                try {
+                    
+                    await this.colorModel.subscribe((colorAdded)=>{
+                        if (!this.__colorsAddresses[colorAdded.address]) {
+                            this.colors.unshift(colorAdded);
+                            this.__colorsAddresses[colorAdded.address] = true;
+                            const color = 'rgb('+colorAdded.fields.r+','+colorAdded.fields.g+','+colorAdded.fields.b+')';
 
-                        if (this.$refs.colorWave) {
-                            this.$refs.colorWave.setColor(color);
+                            if (this.$refs.colorWave) {
+                                this.$refs.colorWave.setColor(color);
+                            }
                         }
-                    }
-                });
+                    });
+
+                } catch (e) {
+                    console.error(e);
+                }
             }
             this.isLoading = false;
 
